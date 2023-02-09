@@ -27,3 +27,4 @@ photo_gallery/ios/Runner.xcodeproj/project.xcworkspace
 *.xcscheme
 *.xcworkspacedata
 *.xcsettings
+Podfile.lock

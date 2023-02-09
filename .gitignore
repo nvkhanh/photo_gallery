@@ -19,3 +19,11 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+*.
+*.
+*.properties
+*.xcconfig
+photo_gallery/ios/Runner.xcodeproj/project.xcworkspace
+*.xcscheme
+*.xcworkspacedata
+*.xcsettings

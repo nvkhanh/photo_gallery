@@ -16,22 +16,23 @@ import '../../domain/user_case.dart';
 
 
 class GalleryPage extends StatelessWidget {
-  final getPhotoUseCase = GetPhotoUseCase(PhotoRepositoryImpl(http.Client()));
   GalleryPage({super.key});
+
+  final getPhotoUseCase = GetPhotoUseCase(PhotoRepositoryImpl(http.Client()));
+
 
   @override
   Widget build(context) {
     return BlocProvider(
       create: (context) => GalleryBloc(getPhotoUseCase)..add(GetPhotoListEvent()),
-      child: GalleryView(getPhotoUseCase),
+      child: GalleryView(),
     );
   }
 }
 
 class GalleryView extends StatelessWidget {
 
-  final GetPhotoUseCase apiProvider;
-  GalleryView(this.apiProvider, {super.key});
+  GalleryView({super.key});
 
   @override
   Widget build(BuildContext context) {

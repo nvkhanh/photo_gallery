@@ -23,12 +23,16 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         flutter-version: '3.7.2'
+    - name: Run pub get
       working-directory: ./photo_gallery
     - run: flutter pub get
+    - name: Run test
       working-directory: ./photo_gallery
     - run: flutter test
+    - name: Run build
       working-directory: ./photo_gallery
     - run: flutter build apk --debug --split-per-abi
+    - name: Run push app 
       working-directory: ./photo_gallery
     - name: Push APK to Releases
       working-directory: ./photo_gallery

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_gallery/domain/entities/photo_entity.dart';
-import 'package:photo_gallery/helpers/utils.dart';
 import 'package:photo_gallery/presentation/bloc/gallery_bloc.dart';
 
 import '../../data/constants.dart';
@@ -30,9 +29,34 @@ class GalleryPage extends StatelessWidget {
   }
 }
 
-class GalleryView extends StatelessWidget {
+class GalleryView extends StatefulWidget {
+  const GalleryView({super.key});
+  @override
+  State<StatefulWidget> createState() => _GalleryViewState();
 
-  GalleryView({super.key});
+}
+class _GalleryViewState extends State<GalleryView> {
+
+  ScrollController? _controller;
+  List<PhotoEntity> _photos = [];
+  var _loading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = ScrollController()..addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    var max = _controller?.position.maxScrollExtent ?? 1;
+    var current = _controller?.position.pixels ?? 0;
+    var percent = current / max;
+    if (percent >= 1 && !_loading) {
+      _loading = true;
+      context.read<GalleryBloc>().add(GetPhotoListMoreEvent());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,61 +69,59 @@ class GalleryView extends StatelessWidget {
           child: Text("Gallery"),
         ),
       ),
-      body: Container(
-          padding: EdgeInsets.symmetric(horizontal: Style.padding20),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: Style.padding20,),
-              Expanded(child: BlocConsumer<GalleryBloc, GalleryState>(
-                listener: (context, state) {
+      body: BlocConsumer<GalleryBloc, GalleryState>(
+          builder: (context, state) {
+            if (state is GalleryStateFailure) {
+              return Center(child: Text(state.message),);
+            }
+            return CustomScrollView(
+              controller: _controller,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: _photos.isEmpty ? buildEmptyWidget() : Container(),
+                ),
+                SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return _buildPhotoItem(context, _photos[index]);
+                    }, childCount: _photos.length)),
+                state is GalleryStateLoadMoreInProgress
+                    ? const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 60),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                )
+                    : const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 80,
+                  ),
+                ),
+              ],
+            );
+          }, listener: (context, state) {
+        if (state is GalleryStateInProgress) {
 
-                },
-                builder: (context, state) {
-                  if (state is GalleryStateInProgress) {
-                    return _buildLoadingWidget();
-                  }else if (state is GalleryStateSuccess) {
-                    return state.photos.isNotEmpty ? _buildPhotoList(context, state.photos) : buildEmptyWidget();
-                  }else if (state is GalleryStateFailure) {
-                    return Container(
-                      margin: EdgeInsets.fromLTRB(0, Style.padding20, 0, 0),
-                      child: const Text("There was an error please try again"),
-                    );
-                  }
-                  return Container();
-                },
-              ))
-            ],
-          )
-      ),
+        }else if (state is GalleryStateSuccess) {
+          var list = state.photos;
+          _loading = false;
+          if (state.page == 0) {
+            _photos.clear();
+            _photos.addAll(list);;
+          }else {
+            _photos.addAll(list);
+          }
+          setState(() {
+
+          });
+        }
+      }),
     );
   }
 
-  Widget _buildLoadingWidget() {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-      width: double.infinity,
-      child: const Center(child: CircularProgressIndicator(
-        color: Colors.green,
-      ),),
-    );
-  }
   Widget buildEmptyWidget() {
     return SizedBox(
       height: 40,
       child: Center(child: Text("There is no data"),),
-    );
-  }
-  Widget _buildPhotoList(BuildContext context, List<dynamic> items) {
-    return ListView.builder (
-        itemCount: items.length,
-        shrinkWrap: true,
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(0.0),
-        itemBuilder: (BuildContext context, int index) {
-          var item = items[index] as PhotoEntity;
-          return _buildPhotoItem(context, item);
-        }
     );
   }
   _buildPhotoItem(BuildContext context, PhotoEntity item) {
@@ -128,5 +150,18 @@ class GalleryView extends StatelessWidget {
     );
   }
 
+
+
+  bool get _isBottom {
+    final maxScroll = _controller?.position.maxScrollExtent ?? 0;
+    final currentScroll = _controller?.offset ?? 0;
+    return currentScroll >= (maxScroll * 0.9);
+  }
+  @override
+  void dispose() {
+    _controller?.removeListener(_scrollListener);
+    super.dispose();
+
+  }
 
 }

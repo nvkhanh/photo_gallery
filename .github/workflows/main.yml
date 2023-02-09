@@ -24,7 +24,6 @@ jobs:
       with:
         flutter-version: '3.7.2'
     - run: cd ../
-    - run: cd ../
     - run: cd photo_gallery
     - run: flutter pub get
     - run: flutter test

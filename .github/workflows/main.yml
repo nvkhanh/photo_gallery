@@ -23,12 +23,15 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         flutter-version: '3.7.2'
-    - run: cd ../
-    - run: cd photo_gallery
+      working-directory: ./photo_gallery
     - run: flutter pub get
+      working-directory: ./photo_gallery
     - run: flutter test
+      working-directory: ./photo_gallery
     - run: flutter build apk --debug --split-per-abi
+      working-directory: ./photo_gallery
     - name: Push APK to Releases
+      working-directory: ./photo_gallery
       uses: ncipollo/release-action@v1
       with:
         artifacts: "build/app/outputs/apk/debug/*.apk"

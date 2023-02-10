@@ -1,5 +1,7 @@
 
-class PhotoEntity {
+import 'package:equatable/equatable.dart';
+
+class PhotoEntity extends Equatable {
   PhotoEntity({
     this.id,
     this.createdAt,
@@ -28,9 +30,16 @@ class PhotoEntity {
   int? likes;
   bool? likedByUser;
 
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    id,
+    urls,
+  ];
+
 }
 
-class UrlsEntity {
+class UrlsEntity extends Equatable {
   UrlsEntity({
     this.raw,
     this.full,
@@ -48,6 +57,14 @@ class UrlsEntity {
   String? small;
   String? thumb;
   String? smallS3;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    raw,
+    full,
+    regular,
+  ];
 
 
 }

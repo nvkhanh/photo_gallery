@@ -11,8 +11,7 @@ import 'package:photo_gallery/presentation/bloc/gallery_bloc.dart';
 
 import '../../data/constants.dart';
 import '../../data/repositories/photo_repository_impl.dart';
-import '../../domain/user_case.dart';
-
+import '../../domain/get_photo_use_case.dart';
 
 class GalleryPage extends StatelessWidget {
   GalleryPage({super.key});

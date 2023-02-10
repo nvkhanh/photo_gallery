@@ -1,6 +1,6 @@
 
 import 'dart:convert';
-
+import 'package:equatable/equatable.dart';
 import 'package:photo_gallery/domain/entities/photo_entity.dart';
 
 T? asT<T>(dynamic value) {
@@ -10,7 +10,7 @@ T? asT<T>(dynamic value) {
   return null;
 }
 
-class PhotoResponse {
+class PhotoResponse extends Equatable {
   PhotoResponse({
     this.id,
     this.createdAt,
@@ -27,7 +27,17 @@ class PhotoResponse {
   });
   PhotoEntity toEntity() {
     return PhotoEntity(
-      id: this.id,
+      id: id,
+      createdAt: createdAt,
+      promotedAt: promotedAt,
+      updatedAt: updatedAt,
+      width: width,
+      height: height,
+      color: color,
+      blurHash: blurHash,
+      description: description,
+      likedByUser: likedByUser,
+      likes: likes,
       urls: this.urls?.toEntity()
     );
   }
@@ -37,12 +47,12 @@ class PhotoResponse {
       id: asT<String?>(json['id']),
       createdAt: asT<String?>(json['created_at']),
       updatedAt: asT<String?>(json['updated_at']),
-      promotedAt: asT<Object?>(json['promoted_at']),
+      promotedAt: asT<String?>(json['promoted_at']),
       width: asT<int?>(json['width']),
       height: asT<int?>(json['height']),
       color: asT<String?>(json['color']),
       blurHash: asT<String?>(json['blur_hash']),
-      description: asT<Object?>(json['description']),
+      description: asT<String?>(json['description']),
       urls: json['urls'] == null
           ? null
           : Urls.fromJson(asT<Map<String, dynamic>>(json['urls'])!),
@@ -54,13 +64,13 @@ class PhotoResponse {
   String? id;
   String? createdAt;
   String? updatedAt;
-  Object? promotedAt;
+  String? promotedAt;
   int? width;
   int? height;
   String? color;
   String? blurHash;
-  Object? description;
-  Object? altDescription;
+  String? description;
+  String? altDescription;
   Urls? urls;
   int? likes;
   bool? likedByUser;
@@ -89,9 +99,16 @@ class PhotoResponse {
     'current_user_collections': currentUserCollections,
     'topic_submissions': topicSubmissions,
   };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    id,
+    urls,
+  ];
 }
 
-class Urls {
+class Urls extends Equatable {
   Urls({
     this.raw,
     this.full,
@@ -139,6 +156,14 @@ class Urls {
     'thumb': thumb,
     'small_s3': smallS3,
   };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    raw,
+    full,
+    regular,
+  ];
 }
 
 

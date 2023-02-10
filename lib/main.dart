@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:photo_gallery/presentation/pages/gallery_page.dart';
+import 'package:photo_gallery/presentation/pages/gallery_screen/gallery_page.dart';
 
 void main() {
   runApp(const MyApp());

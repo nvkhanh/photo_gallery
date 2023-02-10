@@ -15,6 +15,7 @@ class PhotoEntity extends Equatable {
     this.urls,
     this.likes,
     this.likedByUser,
+    this.links,
   });
 
   String? id;
@@ -27,6 +28,7 @@ class PhotoEntity extends Equatable {
   String? blurHash;
   String? description;
   UrlsEntity? urls;
+  LinkEntity? links;
   int? likes;
   bool? likedByUser;
 
@@ -39,6 +41,14 @@ class PhotoEntity extends Equatable {
 
 }
 
+class LinkEntity extends Equatable {
+  LinkEntity({this.html});
+  String? html;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [html];
+}
 class UrlsEntity extends Equatable {
   UrlsEntity({
     this.raw,
@@ -48,8 +58,6 @@ class UrlsEntity extends Equatable {
     this.thumb,
     this.smallS3,
   });
-
-
 
   String? raw;
   String? full;
@@ -65,6 +73,5 @@ class UrlsEntity extends Equatable {
     full,
     regular,
   ];
-
 
 }

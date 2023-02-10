@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:photo_gallery/data/models/photo_response.dart';
 import 'package:photo_gallery/data/repositories/photo_repository_impl.dart';
-import 'package:photo_gallery/domain/entities/photo_entity.dart';
 import 'package:photo_gallery/domain/get_photo_use_case.dart';
 import 'package:photo_gallery/presentation/bloc/gallery_bloc.dart';
 

@@ -24,6 +24,7 @@ class PhotoResponse extends Equatable {
     this.urls,
     this.likes,
     this.likedByUser,
+    this.links,
   });
   PhotoEntity toEntity() {
     return PhotoEntity(
@@ -38,7 +39,8 @@ class PhotoResponse extends Equatable {
       description: description,
       likedByUser: likedByUser,
       likes: likes,
-      urls: this.urls?.toEntity()
+      urls: this.urls?.toEntity(),
+      links: this.links?.toEntity(),
     );
   }
 
@@ -58,6 +60,9 @@ class PhotoResponse extends Equatable {
           : Urls.fromJson(asT<Map<String, dynamic>>(json['urls'])!),
       likes: asT<int?>(json['likes']),
       likedByUser: asT<bool?>(json['liked_by_user']),
+      links: json['links'] == null
+          ? null
+          : LinkResponse.fromJson(asT<Map<String, dynamic>>(json['links'])!),
     );
   }
 
@@ -76,6 +81,7 @@ class PhotoResponse extends Equatable {
   bool? likedByUser;
   List<Object>? currentUserCollections;
   Object? topicSubmissions;
+  LinkResponse? links;
 
   @override
   String toString() {
@@ -108,6 +114,23 @@ class PhotoResponse extends Equatable {
   ];
 }
 
+class LinkResponse extends Equatable {
+  LinkResponse({this.html});
+  String? html;
+  factory LinkResponse.fromJson(Map<String, dynamic> json) => LinkResponse(
+    html: asT<String?>(json['html']),
+  );
+
+  String? raw;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [html];
+
+  LinkEntity toEntity() {
+    return LinkEntity(html: this.html);
+  }
+}
 class Urls extends Equatable {
   Urls({
     this.raw,
@@ -120,11 +143,11 @@ class Urls extends Equatable {
 
   UrlsEntity toEntity() {
     return UrlsEntity(
-      raw: this.raw,
-      full: this.full,
-      regular: this.regular,
-      small: this.thumb,
-      smallS3: this.smallS3
+      raw: raw,
+      full: full,
+      regular: regular,
+      small: thumb,
+      smallS3: smallS3
     );
   }
   factory Urls.fromJson(Map<String, dynamic> json) => Urls(

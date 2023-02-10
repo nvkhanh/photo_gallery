@@ -13,7 +13,7 @@ class Utils {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: SizedBox(
+              child: const SizedBox(
                   width: 50,
                   height: 40,
                   child: Center(

@@ -22,8 +22,8 @@ class GalleryStateInProgress extends GalleryState {}
 class GalleryStateLoadMoreInProgress extends GalleryState {}
 class GalleryStateFailure extends GalleryState {
   final String message;
-
-  GalleryStateFailure(this.message);
+  final int page;
+  GalleryStateFailure({required this.message, required this.page});
 
 }
 class GalleryStateSuccess extends GalleryState {
@@ -58,7 +58,7 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
         page: page,
       ));
     } catch (ex) {
-      emit(GalleryStateFailure(ex.toString()));
+      emit(GalleryStateFailure(message: ex.toString(), page: page));
     }
   }
   void _onLoadMorePhotos(GetPhotoListMoreEvent event, Emitter<GalleryState> emit) async {
@@ -70,7 +70,7 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
       photos.addAll(response);
       emit(GalleryStateSuccess(photos: response, isMoreResultAvailable: isMoreResultIsAvailable, page: page));
     } catch (ex) {
-      emit(GalleryStateFailure(ex.toString()));
+      emit(GalleryStateFailure(message: ex.toString(), page: page));
     }
   }
 

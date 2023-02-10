@@ -71,7 +71,7 @@ class _GalleryViewState extends State<GalleryView> {
       ),
       body: BlocConsumer<GalleryBloc, GalleryState>(
           builder: (context, state) {
-            if (state is GalleryStateFailure) {
+            if (state is GalleryStateFailure && state.page == 0) {
               return Center(child: Text(state.message),);
             }
             return CustomScrollView(

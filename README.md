@@ -6,7 +6,7 @@ It aslo support pull to refresh feature, back to top feature and help user can v
 
 # Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment section for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
 
 ## How to use
 Download or clone this repo by using the link below

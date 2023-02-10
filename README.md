@@ -4,6 +4,9 @@ This is a demo for Flutter project, it shows a list of photos from the internet 
 
 It aslo support pull to refresh feature, back to top feature and help user can view the image (with zoom in and out feature) and share the image to social network
 
+# Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment section for notes on how to deploy the project on a live system.
 
 ## How to use
 Download or clone this repo by using the link below
@@ -114,5 +117,10 @@ helpers/
 ### Main
 
 This is the starting point of the application. All the application level configurations are defined in this file i.e, theme, routes, title, orientation etc.
+
+
+## Conclusion
+
+I will be happy to hear any feedback from you, and if you want to lend a hand with the project then please feel free to submit an issue and/or pull request 
 
 

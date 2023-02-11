@@ -15,6 +15,13 @@ class GetPhotoListEvent extends GalleryEvent {
 class GetPhotoListMoreEvent extends GalleryEvent {
 
 }
+class LikePhotoEvent extends GalleryEvent {
+  final PhotoEntity photo;
+  final bool isLiked;
+
+  LikePhotoEvent({required this.photo, required this.isLiked});
+
+}
 
 abstract class GalleryState  extends Equatable {}
 
@@ -59,19 +66,43 @@ class GalleryStateSuccess extends GalleryState {
   ];
 }
 
+class GalleryFavoriteState extends GalleryState {
+  final List<PhotoEntity> favorites;
+
+  GalleryFavoriteState(this.favorites);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [identityHashCode(this)];
+}
+
 
 class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
   final GetPhotoUseCase _getPhotoUseCase;
+
   var page = 0;
   var pageSize = 20;
+  List<PhotoEntity> favorites = [];
   List<PhotoEntity> photos = [];
+
   GalleryBloc(this._getPhotoUseCase) : super(GalleryStateInit()) {
     on<GetPhotoListEvent>((event, emit) => _onGetPhotoList(event, emit));
     on<GetPhotoListMoreEvent>((event, emit) => _onLoadMorePhotos(event, emit));
+    on<LikePhotoEvent>((event, emit) => _onFavoriteEvent(event, emit));
   }
 
+  void _onFavoriteEvent(LikePhotoEvent event, Emitter<GalleryState> emit) async {
+    if (event.isLiked) {
+      favorites.add(event.photo);
+    }else {
+      favorites.remove(event.photo);
+    }
+    emit(GalleryFavoriteState(favorites));
+  }
   void _onGetPhotoList(GetPhotoListEvent event, Emitter<GalleryState> emit) async {
     page = 0;
+    favorites.clear();
+    photos.clear();
     emit(GalleryStateInProgress());
     try {
       final response = await _getPhotoUseCase.getPhotoList(page, pageSize);

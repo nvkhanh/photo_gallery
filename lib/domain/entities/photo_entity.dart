@@ -16,6 +16,7 @@ class PhotoEntity extends Equatable {
     this.likes,
     this.likedByUser,
     this.links,
+    this.isLiked,
   });
 
   String? id;
@@ -31,6 +32,7 @@ class PhotoEntity extends Equatable {
   LinkEntity? links;
   int? likes;
   bool? likedByUser;
+  bool? isLiked;
 
   @override
   // TODO: implement props

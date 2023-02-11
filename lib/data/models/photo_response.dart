@@ -41,6 +41,7 @@ class PhotoResponse extends Equatable {
       likes: likes,
       urls: this.urls?.toEntity(),
       links: this.links?.toEntity(),
+      isLiked: false,
     );
   }
 

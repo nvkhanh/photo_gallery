@@ -1,81 +1,13 @@
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_gallery/domain/entities/photo_entity.dart';
 
 import '../../domain/get_photo_use_case.dart';
 
-abstract class GalleryEvent {}
 
-class GetPhotoListEvent extends GalleryEvent {
-  GetPhotoListEvent();
-}
-
-class GetPhotoListMoreEvent extends GalleryEvent {
-
-}
-class LikePhotoEvent extends GalleryEvent {
-  final PhotoEntity photo;
-  final bool isLiked;
-
-  LikePhotoEvent({required this.photo, required this.isLiked});
-
-}
-
-abstract class GalleryState  extends Equatable {}
-
-class GalleryStateInit extends GalleryState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
-class GalleryStateInProgress extends GalleryState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
-class GalleryStateLoadMoreInProgress extends GalleryState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
-class GalleryStateFailure extends GalleryState {
-  final String message;
-  final int page;
-  GalleryStateFailure({required this.message, required this.page});
-  @override
-  // TODO: implement props
-  List<Object?> get props => [
-    message,
-    page
-  ];
-
-}
-class GalleryStateSuccess extends GalleryState {
-  GalleryStateSuccess({required this.photos, this.page});
-
-  final List<PhotoEntity> photos;
-  final page;
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [
-    photos,
-    page
-  ];
-}
-
-class GalleryFavoriteState extends GalleryState {
-  final List<PhotoEntity> favorites;
-
-  GalleryFavoriteState(this.favorites);
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [identityHashCode(this)];
-}
-
+part 'gallery_event.dart';
+part 'gallery_state.dart';
 
 class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
   final GetPhotoUseCase _getPhotoUseCase;

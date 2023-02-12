@@ -1,24 +1,15 @@
 
 
-import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:photo_gallery/domain/entities/photo_entity.dart';
 import 'package:photo_gallery/presentation/bloc/gallery_bloc.dart';
-import 'package:photo_gallery/presentation/pages/favorite_screen/favorite_page.dart';
 import 'package:photo_gallery/widgets/photo_row.dart';
-import 'package:share_plus/share_plus.dart';
 
-import '../../../data/constants.dart';
-import '../../../data/repositories/photo_repository_impl.dart';
-import '../../../domain/get_photo_use_case.dart';
 import '../../../routers.dart';
 
 class GalleryPage extends StatelessWidget {
-  GalleryPage({super.key});
+  const GalleryPage({super.key});
 
   @override
   Widget build(context) {
@@ -141,6 +132,8 @@ class _GalleryViewState extends State<GalleryView> {
           }),
           if (_showBackToTopIcon)
             Positioned(
+              bottom: 0,
+              right: 0,
               child: GestureDetector(
                 onTap: () {
                   _scrollToTop();
@@ -167,7 +160,7 @@ class _GalleryViewState extends State<GalleryView> {
                         ),
                       ],
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Icon(
                         Icons.arrow_circle_up_outlined,
                         size: 20,
@@ -177,8 +170,6 @@ class _GalleryViewState extends State<GalleryView> {
                   ),
                 ),
               ),
-              bottom: 0,
-              right: 0,
             )
         ],
       )

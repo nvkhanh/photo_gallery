@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -29,6 +28,7 @@ class _PhotoRowState extends State<PhotoRow> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
+            //show preview photo with zoom effect
             var imageProvider = CachedNetworkImageProvider(item.urls?.regular ?? '');
             showImageViewer(context, imageProvider, onViewerDismissed: () {
             });
@@ -45,77 +45,77 @@ class _PhotoRowState extends State<PhotoRow> {
                   imageUrl: item.urls?.regular ?? '',
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width - Style.padding20 * 2,height: 100,),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
               ],
             ),
           ),
         ),
         Positioned(
-          child: Container(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      var currentStatus = item.isLiked ?? false;
-                      item.isLiked = !(item.isLiked ?? false);
-                      context.read<GalleryBloc>().add(LikePhotoEvent(photo: item, isLiked: !currentStatus));
-                    });
-                  },
+          bottom: 0,
+          right: 0,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  //like or dislike a photo
+                  setState(() {
+                    var currentStatus = item.isLiked ?? false;
+                    item.isLiked = !(item.isLiked ?? false);
+                    context.read<GalleryBloc>().add(LikePhotoEvent(photo: item, isLiked: !currentStatus));
+                  });
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.only(
+                    bottom: 10,
+                    right: 20,
+                  ),
                   child: Container(
-                    color: Colors.transparent,
-                    padding: const EdgeInsets.only(
-                      bottom: 10,
-                      right: 20,
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.2),
                     ),
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.2),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          item.isLiked == true ? Icons.favorite : Icons.favorite_border,
-                          size: 20,
-                          color: Colors.white,
-                        ),
+                    child: Center(
+                      child: Icon(
+                        item.isLiked == true ? Icons.favorite : Icons.favorite_border,
+                        size: 20,
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Share.share(item.links?.html ?? '');
-                  },
+              ),
+              GestureDetector(
+                onTap: () {
+                  //share link of photo to social
+                  Share.share(item.links?.html ?? '');
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.only(
+                    bottom: 10,
+                    right: 20,
+                  ),
                   child: Container(
-                    color: Colors.transparent,
-                    padding: const EdgeInsets.only(
-                      bottom: 10,
-                      right: 20,
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.2),
                     ),
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.2),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.share,
-                          size: 20,
-                          color: Colors.white,
-                        ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.share,
+                        size: 20,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-          bottom: 0,
-          right: 0,
         )
       ],
     );

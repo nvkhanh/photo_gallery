@@ -1,6 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class PhotoEntity extends Equatable {
   PhotoEntity({
     this.id,
@@ -42,7 +43,7 @@ class PhotoEntity extends Equatable {
   ];
 
 }
-
+// ignore: must_be_immutable
 class LinkEntity extends Equatable {
   LinkEntity({this.html});
   String? html;
@@ -51,6 +52,8 @@ class LinkEntity extends Equatable {
   // TODO: implement props
   List<Object?> get props => [html];
 }
+
+// ignore: must_be_immutable
 class UrlsEntity extends Equatable {
   UrlsEntity({
     this.raw,

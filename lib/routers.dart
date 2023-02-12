@@ -11,8 +11,8 @@ class Routes {
   static const String favorite = '/favorite';
 
   static final routes = <String, WidgetBuilder>{
-    gallery: (BuildContext context) => GalleryPage(),
-    favorite: (BuildContext context) => FavoritePage(),
+    gallery: (BuildContext context) => const GalleryPage(),
+    favorite: (BuildContext context) => const FavoritePage(),
   };
 }
 

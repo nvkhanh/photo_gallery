@@ -21,12 +21,11 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => GalleryBloc(GetPhotoUseCase(PhotoRepositoryImpl(http.Client()))),
       child: MaterialApp(
-        title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         routes: Routes.routes,
-        home: GalleryPage(),
+        home: const GalleryPage(),
       ),
     );
 

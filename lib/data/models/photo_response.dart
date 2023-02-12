@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:photo_gallery/domain/entities/photo_entity.dart';
 
+// ignore: must_be_immutable
 T? asT<T>(dynamic value) {
   if (value is T) {
     return value;
   }
   return null;
 }
-
+// ignore: must_be_immutable
 class PhotoResponse extends Equatable {
   PhotoResponse({
     this.id,
@@ -39,8 +40,9 @@ class PhotoResponse extends Equatable {
       description: description,
       likedByUser: likedByUser,
       likes: likes,
-      urls: this.urls?.toEntity(),
-      links: this.links?.toEntity(),
+      urls: urls?.toEntity(),
+      links: links?.toEntity(),
+      isLiked: false,
     );
   }
 
@@ -113,7 +115,7 @@ class PhotoResponse extends Equatable {
     urls,
   ];
 }
-
+// ignore: must_be_immutable
 class LinkResponse extends Equatable {
   LinkResponse({this.html});
   String? html;
@@ -128,9 +130,10 @@ class LinkResponse extends Equatable {
   List<Object?> get props => [html];
 
   LinkEntity toEntity() {
-    return LinkEntity(html: this.html);
+    return LinkEntity(html: html);
   }
 }
+// ignore: must_be_immutable
 class Urls extends Equatable {
   Urls({
     this.raw,

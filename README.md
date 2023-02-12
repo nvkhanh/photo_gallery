@@ -2,7 +2,7 @@
 
 This is a demo for Flutter project, it shows a list of photos from the internet and support paging
 
-It aslo support pull to refresh feature, back to top feature and help user can view the image (with zoom in and out feature) and share the image to social network
+It also support favorite feature, help user can view the image (with zoom in and out feature) and share the image to social network
 
 # Getting Started
 
@@ -34,6 +34,7 @@ flutter pub get
 * View Detail Image
 * Zoom in/out an image
 * Share the image to social network
+* Favorite
 
 
 ### Up-Coming Features:
@@ -53,16 +54,6 @@ flutter pub get
 
 
 ### Folder Structure
-Here is the core folder structure which flutter provides.
-
-```
-flutter-app/
-|- android
-|- build
-|- ios
-|- lib
-|- test
-```
 
 Here is the folder structure we have been using in this project
 
@@ -86,11 +77,12 @@ Now, lets dive into the lib folder which has the main code for the application.
 
 ```
 1- data - Contains the data layer of your project, includes directories for local, network and shared pref/cache.
-3- domain - Contain the bussiness logic and link the data layer to presentation layer. 
-4- presentation — Contains all the ui of your project, contains sub directory for each screen and state management in this project.
-5- helpers — Contains the utilities/common functions of your application.
-6- widgets — Contains the common widgets for your applications
-8- main.dart - This is the starting point of the application. All the application level configurations are defined in this file i.e, theme, routes, title, orientation etc.
+2- domain - Contain the bussiness logic and link the data layer to presentation layer. 
+3- presentation — Contains all the ui of your project, contains sub directory for each screen and state management in this project.
+4- helpers — Contains the utilities/common functions of your application.
+5- widgets — Contains the common widgets for your applications
+6- main.dart - This is the starting point of the application. All the application level configurations are defined in this file i.e, theme, routes, title, orientation etc.
+7- rounters.dart - This contains all of routes of the application
 ```
 
 ### Presentation
@@ -123,4 +115,8 @@ This is the starting point of the application. All the application level configu
 
 I will be happy to hear any feedback from you, and if you want to lend a hand with the project then please feel free to submit an issue and/or pull request 
 
+## Demo
+
+
+https://user-images.githubusercontent.com/5849339/218298186-dc6a854b-3dce-4f46-a41a-028024217af7.mov
 

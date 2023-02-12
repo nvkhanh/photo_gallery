@@ -1,6 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class PhotoEntity extends Equatable {
   PhotoEntity({
     this.id,
@@ -16,6 +17,7 @@ class PhotoEntity extends Equatable {
     this.likes,
     this.likedByUser,
     this.links,
+    this.isLiked,
   });
 
   String? id;
@@ -31,6 +33,7 @@ class PhotoEntity extends Equatable {
   LinkEntity? links;
   int? likes;
   bool? likedByUser;
+  bool? isLiked;
 
   @override
   // TODO: implement props
@@ -40,7 +43,7 @@ class PhotoEntity extends Equatable {
   ];
 
 }
-
+// ignore: must_be_immutable
 class LinkEntity extends Equatable {
   LinkEntity({this.html});
   String? html;
@@ -49,6 +52,8 @@ class LinkEntity extends Equatable {
   // TODO: implement props
   List<Object?> get props => [html];
 }
+
+// ignore: must_be_immutable
 class UrlsEntity extends Equatable {
   UrlsEntity({
     this.raw,

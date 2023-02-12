@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_gallery/presentation/bloc/gallery_bloc.dart';
 import 'package:photo_gallery/presentation/pages/gallery_screen/gallery_page.dart';
+import 'package:photo_gallery/routers.dart';
+
+import 'data/repositories/photo_repository_impl.dart';
+import 'domain/get_photo_use_case.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -11,21 +18,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => GalleryBloc(GetPhotoUseCase(PhotoRepositoryImpl(http.Client()))),
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        routes: Routes.routes,
+        home: const GalleryPage(),
       ),
-      home: GalleryPage(),
     );
+
   }
 }
